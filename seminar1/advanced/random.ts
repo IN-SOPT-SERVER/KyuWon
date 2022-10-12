@@ -4,22 +4,9 @@
 2. organize 내부 로직 채우기
 */
 
-interface Member {
-    name: string;
-    group: string;
-    favoriteFood?: string;
-}
+import _ from 'lodash'
+import { Group, Member, Dinner } from './interface/interface';
 
-interface Dinner {
-    member: Member[];
-    shuffle(array: Member[]): Member[];
-    organize(array: Member[]): void;
-}
-
-interface Group {
-  members: string[];
-  menu: string | undefined;
-}
 
 const dinner: Dinner = {
     member: [
@@ -63,24 +50,25 @@ const dinner: Dinner = {
       // 예시 답안
       
       let result: Group[] = []
-      // ob yb 구별하기
-      const obList = dinner.member.filter((member) => member.group == "ob");
-      const ybList = dinner.member.filter((member) => member.group == "yb");
+
+      // ob yb 구별하고 섞기
+      const obList = _.shuffle(array.filter((member) => member.group == "ob"));
+      const ybList = _.shuffle(array.filter((member) => member.group == "yb"));
 
       // ob-yb 짝 만들기
-      const groups = obList.map((ob, idx) => [ob, ybList[idx]] );
-      // console.log(groups)
-      groups.forEach((group) => {
-        // console.log(group.map((e)=> console.log(e.favoriteFood)))
-        const foodList = group.map((member)=> member.favoriteFood).filter((food)=> !undefined)
-        const menu = foodList[Math.floor(Math.random() * foodList.length)]
-        result.push({
-          members: group.map((elem)=> elem.name),
-          menu: menu
-        })
-      });
+      for ( let idx = 0; idx < obList.length; idx++) {
+        let group: Group = {
+          members: [],
+          menu : undefined
+        }
+        group.members = [obList[idx].name, ybList[idx].name];
+        const foodList =  [obList[idx].favoriteFood, ybList[idx].favoriteFood]
+        group.menu = foodList[Math.floor(Math.random() * foodList.length)]
+        result.push(group)
+      }
+
       result.map((group, idx)=> {
-        console.log(`${idx+1} 번째 그룹은 ${JSON.stringify(group.members)}이고 ${group.menu}를 먹습니다`)
+        console.log(`${idx+1} 번째 그룹은 ${group.members}이고 ${group.menu}를 먹습니다`)
       })
     },
   };

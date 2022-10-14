@@ -8,7 +8,7 @@ import memberRouter from './member.router'
 const router: Router = express.Router();
 
 router.get("/", (req: Request, res: Response) => {
-    return res.status(200).send("api router 진입 성공. api/index.ts의 get이 실행안되고 이것이 실행됩니다");
+    return res.status(200).send("api router 진입 성공.");
   });
 
 router.use("/member", memberRouter)

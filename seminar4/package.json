@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "dev": "nodemon",
+    "build": "tsc && node dist",
+    "db:pull": "npx prisma db pull",
+    "db:push": "npx prisma db push",
+    "generate": "npx prisma generate"
+  },
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^8.5.9"
+  }
+}
